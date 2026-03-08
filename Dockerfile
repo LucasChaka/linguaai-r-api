@@ -1,23 +1,14 @@
-FROM rocker/r-ver:4.5.0
+FROM rocker/tidyverse:4.4.0
 
 # System dependencies
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
-    libgit2-dev \
-    libfontconfig1-dev \
-    libharfbuzz-dev \
-    libfribidi-dev \
-    libfreetype6-dev \
-    libpng-dev \
-    libtiff5-dev \
-    libjpeg-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install R packages
-RUN R -e "install.packages('remotes', repos='https://cloud.r-project.org')"
-RUN R -e "install.packages(c('plumber','tidyverse','broom','jsonlite','survival','survminer','MatchIt','BTYD','lme4','caret','glmnet','randomForest','CLVTools','lubridate','readxl'), repos='https://cloud.r-project.org', dependencies=TRUE)"
+# Install only packages not already in rocker/tidyverse
+RUN R -e "install.packages(c('plumber','broom','survival','survminer','MatchIt','BTYD','lme4','caret','glmnet','randomForest','CLVTools'), repos='https://cloud.r-project.org', dependencies=TRUE, Ncpus=4)"
 
 WORKDIR /app
 COPY plumber.R .
