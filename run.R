@@ -1,3 +1,7 @@
+if (!requireNamespace("plumber", quietly = TRUE)) {
+  install.packages("plumber", repos = "https://cloud.r-project.org")
+}
+
 library(plumber)
 
 port <- as.integer(Sys.getenv("PORT", 8000))

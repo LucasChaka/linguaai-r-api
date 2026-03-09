@@ -7,12 +7,11 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install packages in small batches to avoid timeout
-RUN R -e "install.packages('plumber', repos='https://cloud.r-project.org')"
-RUN R -e "install.packages('broom', repos='https://cloud.r-project.org')"
-RUN R -e "install.packages('survival', repos='https://cloud.r-project.org')"
-RUN R -e "install.packages('lme4', repos='https://cloud.r-project.org')"
-RUN R -e "install.packages('glmnet', repos='https://cloud.r-project.org')"
+RUN R -e "install.packages('plumber', repos='https://cloud.r-project.org', lib=.libPaths()[1])"
+RUN R -e "install.packages('broom', repos='https://cloud.r-project.org', lib=.libPaths()[1])"
+RUN R -e "install.packages('survival', repos='https://cloud.r-project.org', lib=.libPaths()[1])"
+RUN R -e "install.packages('lme4', repos='https://cloud.r-project.org', lib=.libPaths()[1])"
+RUN R -e "install.packages('glmnet', repos='https://cloud.r-project.org', lib=.libPaths()[1])"
 
 WORKDIR /app
 COPY plumber.R .
