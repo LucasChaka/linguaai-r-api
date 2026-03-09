@@ -3,7 +3,7 @@ library(tidyverse)
 library(broom)
 library(jsonlite)
 library(survival)
-library(CLVTools)
+library(glmnet)
 
 #* @apiTitle Inlucyd R Analytics API
 #* @apiDescription Runs statistical models on customer data

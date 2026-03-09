@@ -7,8 +7,12 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install only packages not already in rocker/tidyverse
-RUN R -e "install.packages(c('plumber','broom','survival','survminer','MatchIt','BTYD','lme4','caret','glmnet','randomForest','CLVTools'), repos='https://cloud.r-project.org', dependencies=TRUE, Ncpus=4)"
+# Install packages in small batches to avoid timeout
+RUN R -e "install.packages('plumber', repos='https://cloud.r-project.org')"
+RUN R -e "install.packages('broom', repos='https://cloud.r-project.org')"
+RUN R -e "install.packages('survival', repos='https://cloud.r-project.org')"
+RUN R -e "install.packages('lme4', repos='https://cloud.r-project.org')"
+RUN R -e "install.packages('glmnet', repos='https://cloud.r-project.org')"
 
 WORKDIR /app
 COPY plumber.R .
